@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Emission Test Predictor - Sri Lanka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f2f1 0%, #b3e5fc 100%);
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: Key Contributing Factors 36px;
+            font-weight: bold;
+            color: #1a237e;
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            color: #455a64;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 24px;
+        }
+
+        .card-header {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2e7d32;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #37474f;
+            margin-bottom: 4px;
+        }
+
+        .form-group label .limit {
+            font-size: 11px;
+            color: #78909c;
+            font-weight: normal;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cfd8dc;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2e7d32;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #455a64;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            padding-top: 16px;
+            border-top: 1px solid #eceff1;
+        }
+
+        .button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: transform 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.02);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .result-card-pass {
+            background: #e8f5e9;
+            border: 2px solid #66bb6a;
+        }
+
+        .result-card-fail {
+            background: #ffebee;
+            border: 2px solid #ef5350;
+        }
+
+        .result-number {
+            font-size: 64px;
+            font-weight: bold;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .result-number-pass {
+            color: #2e7d32;
+        }
+
+        .result-number-fail {
+            color: #c62828;
+        }
+
+        .result-text {
+            font-size: 18px;
+            text-align: center;
+            font-weight: 600;
+            color: #37474f;
+        }
+
+        .result-description {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #546e7a;
+        }
+
+        .factor-card {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .factor-card-danger {
+            background: #ffebee;
+            border-left: 4px solid #ef5350;
+        }
+
+        .factor-card-warning {
+            background: #fff3e0;
+            border-left: 4px solid #ffa726;
+        }
+
+        .factor-card-success {
+            background: #e8f5e9;
+            border-left: 4px solid #66bb6a;
+        }
+
+        .factor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .factor-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #263238;
+        }
+
+        .factor-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .factor-badge-danger {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .factor-badge-warning {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .factor-badge-success {
+            background: #c8e6c9;
+            color: #1b5e20;
+        }
+
+        .factor-value {
+            font-size: 13px;
+            color: #546e7a;
+        }
+
+        .info-card {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .info-card-title {
+            font-weight: 600;
+            color: #0d47a1;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .info-card-text {
+            font-size: 13px;
+            color: #1565c0;
+        }
+
+        .recommendation-box {
+            background: #fff3e0;
+            border: 1px solid #ffb74d;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .recommendation-list {
+            font-size: 13px;
+            color: #bf360c;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 16px;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: #263238;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-box-list {
+            font-size: 13px;
+            color: #546e7a;
+            line-height: 1.8;
+        }
+
+        .error-message {
+            background: #ffebee;
+            border: 1px solid #ef5350;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            color: #c62828;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-two {
+                grid-template-columns: 1fr;
+            }
+
+            .header-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            <span>🚗</span>
+            <span>Vehicle Emission Test Predictor</span>
+        </div>
+        <p class="header-subtitle">Sri Lanka Emission Standards Compliance System</p>
+        <p class="header-subtitle" style="font-size: 12px;">CatBoost Machine Learning</p>
+    </div>
+
+    <div class="grid-container">
+        <!-- Input Form -->
+        <div class="card">
+            <h2 class="card-header">
+                <span>⚡</span>
+                Vehicle & Test Information
+            </h2>
+
+            <form action="/predict" method="POST">
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>Vehicle Age (years)</label>
+                        <input type="number" name="VehicleAge" value="{{ form_data.VehicleAge or 24 }}" min="0" max="50" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cylinders</label>
+                        <input type="number" name="VehCylinders" value="{{ form_data.VehCylinders or 4 }}" min="1" max="12" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Mileage (km)</label>
+                    <input type="number" name="mileage" value="{{ form_data.mileage or 80000 }}" min="0" step="1000" required>
+                </div>
+
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>Fuel Type</label>
+                        <select name="fuelType" required>
+                            <option value="Petrol" {{ 'selected' if form_data.fuelType == 'Petrol' else '' }}>Petrol</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vehicle Make</label>
+                        <select name="VehMake" required>
+                            <option value="TOYOTA" {{ 'selected' if form_data.VehMake == 'TOYOTA' else '' }}>TOYOTA</option>
+                            <option value="BAJAJ" {{ 'selected' if form_data.VehMake == 'BAJAJ' else '' }}>BAJAJ</option>
+                            <option value="TVS" {{ 'selected' if form_data.VehMake == 'TVS' else '' }}>TVS</option>
+                            <option value="Suzuki" {{ 'selected' if form_data.VehMake == 'HERO' else '' }}>HERO</option>
+                            <option value="HERO" {{ 'selected' if form_data.VehMake == 'YAMAHA' else '' }}>YAMAHA</option>
+                            <option value="YAMAHA" {{ 'selected' if form_data.VehMake == 'NISSAN' else '' }}>NISSAN</option>
+                            <option value="HONDA" {{ 'selected' if form_data.VehMake == 'HONDA' else '' }}>HONDA</option>
+                            <option value="MITSUBISHI" {{ 'selected' if form_data.VehMake == 'MITSUBISHI' else '' }}>MITSUBISHI</option>
+                            <option value="SUZUKI" {{ 'selected' if form_data.VehMake == 'SUZUKI' else '' }}>SUZUKI</option>
+                            <option value="PERODUA" {{ 'selected' if form_data.VehMake == 'PERODUA' else '' }}>PERODUA</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-title">Emission Values Idle Mode</div>
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>IdleRPM (ppm)</label>
+                        <input type="number" name="IdleRPM" value="{{ form_data.IdleRPM or 990.0}}" step="0.01" min="0" required>
+                    </div>
+                </div>
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>IdleHC (ppm)</label>
+                        <input type="number" name="IdleHC" value="{{ form_data.IdleHC or 120.5}}" step="0.01" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>IdleCO (ppm)</label>
+                        <input type="number" name="IdleCO" value="{{ form_data.IdleCO or 0.591}}" step="0.001" min="0" required>
+                    </div>
+                </div>
+
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>IdleCO2 (ppm)</label>
+                        <input type="number" name="IdleCO2" value="{{ form_data.IdleCO2 or 12.81}}" step="0.01" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>IdleO2 (ppm)</label>
+                        <input type="number" name="IdleO2" value="{{ form_data.IdleO2 or 1.34}}" step="0.01" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>IdleLambda</label>
+                    <input type="number" name="IdleLambda" value="{{ form_data.IdleLambda or 1.042}}" step="0.001" min="0" required>
+                </div>
+
+                <div class="section-title">Emission Values - Accelerate Mode</div>
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>AccRPM (ppm)</label>
+                        <input type="number" name="AccRPM" value="{{ form_data.AccRPM or 2500.0}}" step="0.0" min="0" required>
+                    </div>
+                </div>
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>AccHC (ppm)</label>
+                        <input type="number" name="AccHC" value="{{ form_data.AccHC or 88.0}}" step="0.1" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>AccCO (ppm)</label>
+                        <input type="number" name="AccCO" value="{{ form_data.AccCO or 0.683}}" step="0.001" min="0" required>
+                    </div>
+                </div>
+
+                <div class="grid-two">
+                    <div class="form-group">
+                        <label>AccCO2 (ppm)</label>
+                        <input type="number" name="AccCO2" value="{{ form_data.AccCO2 or 13.14}}" step="0.01" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>AccO2 (ppm)</label>
+                        <input type="number" name="AccO2" value="{{ form_data.AccO2 or 1.15}}" step="0.01" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Acc Lambda</label>
+                    <input type="number" name="AccLambda" value="{{ form_data.AccLambda or 1.031}}" step="0.001" min="0" required>
+                </div>
+                <button type="submit" class="button">Predict Test Result</button>
+            </form>
+        </div>
+
+        <!-- Results -->
+        <div>
+            {% if result %}
+            {% if result.success %}
+            <!-- Prediction Result Card -->
+            <div class="result-card {% if result.will_fail %}result-card-fail{% else %}result-card-pass{% endif %}">
+                <h2 class="card-header">
+                    <span>📊</span>
+                    Prediction Result
+                </h2>
+
+                <div class="result-number {% if result.will_fail %}result-number-fail{% else %}result-number-pass{% endif %}">
+                    {{ result.probability_percent_fail }}%
+                </div>
+                <p class="result-text">
+                    Fail Probability
+                </p>
+
+                <div class="result-number {% if result.will_fail %}result-number-fail{% else %}result-number-pass{% endif %}">
+                    {{ result.probability_percent_pass }}%
+                </div>
+                <p class="result-text">
+                    Pass Probability
+                </p>
+
+            </div>
+
+
+            {% if result.will_fail %}
+
+            {% endif %}
+            {% else %}
+
+            <div class="error-message">
+                <strong>Error:</strong> {{ result.message }}<br>
+                <small>{{ result.error }}</small>
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
