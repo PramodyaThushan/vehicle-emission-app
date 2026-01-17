@@ -1,5 +1,5 @@
 # vehicle-emission-app
+Deploy Command -  python3 app.py
 Vehicle Emission Predict System - Web UI
-Command -  python3 app.py
-<img width="1311" height="984" alt="image" src="https://github.com/user-attachments/assets/1a55df58-bbbb-43b0-a4b7-e6cc3f8ff947" />
+<img width="1282" height="985" alt="image" src="https://github.com/user-attachments/assets/a3089ae6-4d7d-4c1b-a1d7-2f618eea5898" />
 
